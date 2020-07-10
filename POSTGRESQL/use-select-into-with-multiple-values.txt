@@ -1,0 +1,22 @@
+CREATE FUNCTION get_post_score(IN post_id integer)
+RETURNS INTEGER AS $$
+DECLARE
+
+   upvotes integer;
+   downvotes integer;
+   score integer;
+   
+
+BEGIN
+  
+  SELECT thumbs_up, thumbs_down INTO upvotes, downvotes FROM post WHERE id = post_id; 
+  
+  	score := upvotes - downvotes;
+    
+    RETURN score;
+  
+ 
+  
+  
+END;
+$$ LANGUAGE plpgsql;

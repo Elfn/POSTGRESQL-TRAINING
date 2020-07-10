@@ -1,0 +1,5 @@
+SELECT u.user_name, u.user_id, COUNT(p.user_id) 
+FROM get_active_users() u 
+INNER JOIN post p 
+ON p.user_id = u.user_id 
+GROUP BY u.user_name,u.user_id ;

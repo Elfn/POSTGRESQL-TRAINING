@@ -1,0 +1,16 @@
+CREATE FUNCTION remove_post_author(post_id integer)
+RETURNS void AS $$
+DECLARE 
+
+ user_id_ integer;
+
+BEGIN
+
+  SELECT user_id INTO user_id_ FROM post WHERE id = post_id; 
+
+  PERFORM remove_user_account(user_id_);
+END;
+$$ LANGUAGE plpgsql;
+
+
+--his executes query and discards the result, to omit the result returned by the function

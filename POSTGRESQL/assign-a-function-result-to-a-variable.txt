@@ -1,0 +1,24 @@
+CREATE FUNCTION downvote(IN post_id integer)
+RETURNS VOID AS $$
+DECLARE
+  user_id integer;
+BEGIN
+  
+  UPDATE post SET thumbs_down = thumbs_down + 1
+  WHERE id = post_id;
+  
+ IF (SELECT (thumbs_up - thumbs_down) < -10 FROM post WHERE id = post_id)
+ THEN
+ 
+ 	 user_id := lock_post_author(post_id);
+    
+    RAISE NOTICE 'User % has been locked because of downvotes in post %', user_id, post_id;
+ 
+ END IF;
+  
+  
+END;
+$$ LANGUAGE plpgsql;
+
+SELECT downvote(3);
+;

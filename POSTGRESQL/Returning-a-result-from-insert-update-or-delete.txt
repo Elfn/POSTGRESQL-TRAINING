@@ -1,0 +1,4 @@
+UPDATE post INTO score 
+SET thumbs_down = thumbs_down + 1
+WHERE id = post_id
+RETURNING thumbs_down;

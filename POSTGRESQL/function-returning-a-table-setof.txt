@@ -1,0 +1,27 @@
+CREATE FUNCTION get_users_with_no_posts()
+RETURNS SETOF user_account 
+AS $$
+BEGIN
+  RETURN QUERY
+    SELECT DISTINCT u.*
+    FROM user_account u FULL JOIN  post p
+    ON p.user_id = u.id
+    WHERE p.content IS NULL;   
+END;
+$$ LANGUAGE plpgsql;
+SELECT get_users_with_no_posts();
+
+
+
+--WITH RECORD (record variable holds a single row (or is NULL), not a table)
+
+CREATE FUNCTION get_post_scores()
+RETURNS SETOF record AS $$
+BEGIN
+  RETURN QUERY
+    SELECT id,thumbs_up,thumbs_down   FROM post;
+END;
+$$ LANGUAGE plpgsql;
+
+SELECT * FROM get_post_scores() AS (post_id int, thumbs_up int, thumbs_down int);
+

@@ -1,0 +1,13 @@
+CREATE FUNCTION get_active_users()
+RETURNS TABLE (
+  user_id int,
+  user_name varchar
+)
+AS $$
+BEGIN
+RETURN QUERY
+  SELECT id, name FROM user_account WHERE is_deleted = FALSE AND is_locked = FALSE ORDER BY name;
+END;
+$$ LANGUAGE plpgsql;
+
+SELECT get_active_users();

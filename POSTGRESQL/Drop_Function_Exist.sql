@@ -1,0 +1,1 @@
+DROP FUNCTION IF EXISTS get_circle_area(integer);

@@ -1,0 +1,2 @@
+select  mode() within group (order by topic_id)
+from post;

@@ -1,0 +1,6 @@
+CREATE FUNCTION /* function name */(/* argument */)
+RETURNS /* return type */ AS $$
+BEGIN
+  /* add your logic here */
+END;
+$$ LANGUAGE plpgsql;

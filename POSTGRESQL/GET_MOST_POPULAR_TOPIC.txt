@@ -1,0 +1,11 @@
+CREATE FUNCTION get_most_popular_topic(OUT topic_name varchar, OUT countofposts bigint)
+RETURNS SETOF record  AS $$
+BEGIN
+  RETURN QUERY
+    SELECT t.name, COUNT(p.*)    
+    FROM post p, topic t WHERE p.topic_id = t.id
+    AND p.topic_id = (SELECT  MODE() WITHIN GROUP (ORDER BY topic_id) FROM post)
+    GROUP BY t.name;
+END;
+$$ LANGUAGE plpgsql;
+SELECT get_most_popular_topic()
